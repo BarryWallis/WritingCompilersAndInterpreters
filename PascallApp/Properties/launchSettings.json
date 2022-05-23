@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PascalApp": {
+      "commandName": "Project",
+      "commandLineArgs": "execute -i \"C:\\Users\\Barry\\OneDrive\\Documents\\WCI Source Files\\Chapter2\\Chapter2\\hello.pas\""
+    }
+  }
+}
