@@ -1,6 +1,4 @@
-﻿using WritingCompilersAndInterpretersLib.FrontEnd;
-
-namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
+﻿namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
 
 /// <summary>
 /// Pascal scanner.

@@ -33,7 +33,7 @@ public class Source : MessageHandler
         {
             return EndOfFile;
         }
-        else if (Position == -1 || Position == _line.Length)
+        else if (Position == _startOfLine || Position == _line.Length)
         {
             return EndOfLine;
         }

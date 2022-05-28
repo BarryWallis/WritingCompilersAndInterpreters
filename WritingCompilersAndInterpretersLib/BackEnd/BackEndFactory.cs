@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.BackEnd.Compiler;
+﻿using WritingCompilersAndInterpretersLib.BackEnd.Compiler;
 using WritingCompilersAndInterpretersLib.BackEnd.Interpreter;
 
 namespace WritingCompilersAndInterpretersLib.BackEnd;
@@ -20,7 +14,7 @@ public static class BackEndFactory
     /// <param name="operation">The operation of the component.</param>
     /// <returns>The appropriate back end.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Invalid operation given.</exception>
-    public static BackEnd CreateBackEnd(string operation) 
+    public static BackEnd CreateBackEnd(string operation)
         => operation.Equals("compile", StringComparison.OrdinalIgnoreCase)
            ? new CodeGenerator()
            : operation.Equals("execute", StringComparison.OrdinalIgnoreCase)

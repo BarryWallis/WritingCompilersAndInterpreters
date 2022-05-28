@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using static System.Net.Mime.MediaTypeNames;
+﻿using WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
+using WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Tokens;
 
 namespace WritingCompilersAndInterpretersLib.FrontEnd;
 
@@ -27,23 +22,60 @@ public class TokenFactory
     /// <returns>The new <see cref="Token"/>.</returns>
     public virtual Token Create()
     {
-        char currentCharacter = GetCurrentCharacter();
-        Token token = currentCharacter switch
+        SkipWhiteSpace();
+
+        Token token;
+        char currentCharacter = _source.GetCurrentCharacter();
+        if (currentCharacter == Source.EndOfFile)
         {
-            Source.EndOfFile => new EndOfFileToken(),
-            _ => ExtractToken(_source)// Ignore all tokens until EOF
-        };
+            token = new EndOfFileToken();
+        }
+        else if (char.IsLetter(currentCharacter))
+        {
+            token = new PascalWordToken(_source);
+        }
+        else if (char.IsDigit(currentCharacter))
+        {
+            token = new PascalNumberToken(_source);
+        }
+        else if (currentCharacter == '\'')
+        {
+            token = new PascalStringToken(_source);
+        }
+        else if (PascalTokenType.LookupSpecialSymbols.ContainsKey(currentCharacter.ToString()))
+        {
+            token = new PascalSpecialSymbolToken(_source);
+        }
+        else
+        {
+            token = new PascalErrorToken(PascalErrorCode.InvalidCharacter, currentCharacter.ToString());
+            _ = _source.GetNextCharacter();
+        }
+
         return token;
-
     }
 
-    private Token ExtractToken(Source source)
+    private void SkipWhiteSpace()
     {
-        string text = $"{GetCurrentCharacter()}";
-        object? value = null;
-        _ = source.GetNextCharacter();
-        return new Token(_source.LineNumber, _source.Position, text, value);
-    }
+        char currentCharacter = _source.GetCurrentCharacter();
+        while (char.IsWhiteSpace(currentCharacter) || (currentCharacter == '{'))
+        {
+            if (currentCharacter == '{')
+            {
+                do
+                {
+                    currentCharacter = _source.GetNextCharacter();
+                } while (currentCharacter is not '}' and not Source.EndOfFile);
 
-    private char GetCurrentCharacter() => _source.GetCurrentCharacter();
+                if (currentCharacter == '}')
+                {
+                    currentCharacter = _source.GetNextCharacter();
+                }
+            }
+            else
+            {
+                currentCharacter = _source.GetCurrentCharacter();
+            }
+        }
+    }
 }

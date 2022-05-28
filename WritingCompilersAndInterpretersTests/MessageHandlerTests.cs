@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Message;
-
-using static WritingCompilersAndInterpretersTests.MessageHandlerTests;
+﻿using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersTests;
 
@@ -19,7 +11,7 @@ public class MessageHandlerTests
 
         public void OnCompleted() => throw new NotImplementedException();
         public void OnError(Exception error) => throw new NotImplementedException();
-        public void OnNext(Message value) 
+        public void OnNext(Message value)
             => SourceLineMessage = value as SourceLineMessage ?? throw new InvalidCastException();
     }
 

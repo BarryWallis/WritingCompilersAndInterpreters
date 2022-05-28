@@ -251,3 +251,7 @@ dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggesti
 dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
+dotnet_diagnostic.CA1829.severity = warning
+
+# IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = warning

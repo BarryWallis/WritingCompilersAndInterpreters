@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.BackEnd;
+﻿using WritingCompilersAndInterpretersLib.BackEnd;
 using WritingCompilersAndInterpretersLib.FrontEnd;
 using WritingCompilersAndInterpretersLib.Intermediate;
 
@@ -17,7 +10,7 @@ namespace PascalApp;
 public class Pascal
 {
 
-    public Pascal(string operation, string filePath, string flags) 
+    public Pascal(string operation, string filePath, string flags)
     {
         try
         {

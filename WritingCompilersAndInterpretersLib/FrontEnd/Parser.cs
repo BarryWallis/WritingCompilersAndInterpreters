@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-using WritingCompilersAndInterpretersLib.Intermediate;
+﻿using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersLib.FrontEnd;
@@ -22,7 +19,7 @@ public abstract class Parser : MessageHandler
     public IIntermediateCode? IntermediateCode { get; protected set; } = null;
 
     /// <value>The number of syntax errors returned by the <see cref="Parse"/>.</value>
-    public abstract int ErrorCount { get; protected set; }
+    public abstract int ErrorCount { get; }
 
     /// <value>Return the scanner's current <see cref="Token"/>.</value>
     public Token? CurrentToken => Scanner.CurrentToken;

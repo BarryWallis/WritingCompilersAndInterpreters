@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-
-namespace WritingCompilersAndInterpretersLib.Message;
+﻿namespace WritingCompilersAndInterpretersLib.Message;
 
 public record CompilerSummaryMessage(int InstructionCount, float ElapsedTime) : Message
 {

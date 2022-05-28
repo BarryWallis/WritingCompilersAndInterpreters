@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Message;
+﻿using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersTests;
 
 [TestClass]
-public  class ParserSummaryMessageTests
+public class ParserSummaryMessageTests
 {
     [TestMethod]
     public void Ctor_ValidArguments_ConstructParserSummaryMessage()

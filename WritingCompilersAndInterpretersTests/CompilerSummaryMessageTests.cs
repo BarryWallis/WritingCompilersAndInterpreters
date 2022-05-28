@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Message;
+﻿using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersTests;
 
@@ -28,6 +22,6 @@ public class CompilerSummaryMessageTestsS
     [DataRow(1, -1.0f)]
     [DataRow(-1, -1.0f)]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void Ctor_InvalidArguments_ThrowsArgumentOutOfRangeException(int instructionCount, float elapsedTime) 
+    public void Ctor_InvalidArguments_ThrowsArgumentOutOfRangeException(int instructionCount, float elapsedTime)
         => _ = new CompilerSummaryMessage(instructionCount, elapsedTime);
 }

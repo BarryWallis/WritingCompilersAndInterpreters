@@ -1,4 +1,8 @@
-﻿using WritingCompilersAndInterpretersLib.Message;
+﻿using System.Diagnostics;
+using System.Text;
+
+using WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
+using WritingCompilersAndInterpretersLib.Message;
 
 namespace PascalApp;
 public class ParserMessageListener : IObserver<Message>
@@ -8,15 +12,37 @@ public class ParserMessageListener : IObserver<Message>
     public void OnError(Exception error) => throw new NotImplementedException();
 
     /// <inheritdoc/>
-    public void OnNext(Message value)
+    public void OnNext(Message message)
     {
-        switch (value)
+        switch (message)
         {
             case ParserSummaryMessage parserSummaryMessage:
                 Console.WriteLine();
                 Console.WriteLine($"{parserSummaryMessage.NumberOfLines,20} source lines.");
                 Console.WriteLine($"{parserSummaryMessage.ErrorCount,20} syntax errors.");
                 Console.WriteLine($"{parserSummaryMessage.ElapsedTIme,20:F2} seconds total parsing time. ");
+                break;
+            case TokenMessage tokenMessage:
+                Console.WriteLine($">>> {tokenMessage.TokenType.Text,-15} line={tokenMessage.LineNumber,3:D3}, " +
+                    $"pos={tokenMessage.Position,2}, text=\"{tokenMessage.Text}\"");
+                if (tokenMessage.Value is not null)
+                {
+                    Debug.Assert(tokenMessage.Value is string);
+                    string tokenValue = tokenMessage.Value! as string ?? throw new InvalidOperationException();
+                    tokenValue = tokenMessage.TokenType == PascalTokenType.String ? $"\"{tokenValue!}\"" : tokenValue!;
+                    Console.WriteLine($">>>                 value={tokenValue}");
+                }
+                break;
+            case SyntaxErrorMessage syntaxErrorMessage:
+                const int prefixWidth = 5;
+                int spaceCount = prefixWidth + syntaxErrorMessage.Position;
+                StringBuilder flagBuffer = new();
+                _ = flagBuffer.Append(new string(' ', spaceCount)).Append($"^\n*** {syntaxErrorMessage.ErrorMessage}");
+                if (syntaxErrorMessage.TokenText is not null)
+                {
+                    _ = flagBuffer.Append($" [at \"{syntaxErrorMessage.TokenText}\"]");
+                }
+                Console.WriteLine(flagBuffer.ToString());
                 break;
         }
     }

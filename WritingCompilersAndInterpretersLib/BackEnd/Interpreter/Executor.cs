@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Intermediate;
+﻿using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersLib.BackEnd.Interpreter;

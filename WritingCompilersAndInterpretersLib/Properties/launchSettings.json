@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "PascalApp": {
+    "WritingCompilersAndInterpretersLib": {
       "commandName": "Project",
       "commandLineArgs": "compile \"C:\\Users\\Barry\\OneDrive\\Documents\\WCI Source Files\\Chapter3\\scannertest.txt\""
     }

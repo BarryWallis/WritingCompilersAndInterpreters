@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.FrontEnd;
+﻿using WritingCompilersAndInterpretersLib.FrontEnd;
 using WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
 
 namespace WritingCompilersAndInterpretersTests;
@@ -23,7 +17,7 @@ public class FrontEndFactoryTests
     }
 
     [TestMethod]
-    [DataRow("pascal","x")]
+    [DataRow("pascal", "x")]
     [DataRow("x", "top-down")]
     [DataRow("x", "x")]
     [ExpectedException(typeof(ArgumentException))]
