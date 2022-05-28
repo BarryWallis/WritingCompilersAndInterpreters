@@ -7,8 +7,10 @@ public record PascalErrorToken : PascalToken
     /// </summary>
     /// <param name="errorCode">The error code.</param>
     /// <param name="tokenText">The text of the erroneous token.</param>
-    public PascalErrorToken(PascalErrorCode errorCode, string tokenText)
+    public PascalErrorToken(PascalErrorCode errorCode, string tokenText, Source source)
     {
+        LineNumber = source.LineNumber;
+        Position = source.Position;
         Text = tokenText;
         TokenType = PascalTokenType.Error;
         Value = errorCode;

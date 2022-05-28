@@ -28,8 +28,9 @@ public record PascalWordToken : PascalToken
         }
 
         Text = textBuffer.ToString();
-        TokenType = PascalTokenType.ReservedWords.Contains(Text.ToLowerInvariant())
-                    ? PascalTokenType.TokenTypes.First(t => t.Text == Text)
+        string normalizedText = Text.ToLowerInvariant();
+        TokenType = PascalTokenType.ReservedWords.Contains(normalizedText)
+                    ? PascalTokenType.TokenTypes.First(t => t.Text == normalizedText)
                     : PascalTokenType.Identifier;
         Value = null;
 

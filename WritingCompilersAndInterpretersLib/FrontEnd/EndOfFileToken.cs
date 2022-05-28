@@ -8,7 +8,9 @@ public record EndOfFileToken : Token
     /// <summary>
     /// Create a new <see cref="EndOfFileToken"/>.
     /// </summary>
-    public EndOfFileToken() : base()
+    public EndOfFileToken(Source source) : base()
     {
+        LineNumber = source.LineNumber;
+        Position = source.Position;
     }
 }

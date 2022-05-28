@@ -43,7 +43,6 @@ public class PascalParserTopDown : Parser
                 else
                 {
                     Debug.Assert(token.Text is not null);
-                    Debug.Assert(token.Value is not null);
                     Debug.Assert(token.TokenType is not null);
                     SendMessage(new TokenMessage(token.LineNumber, token.Position, token.TokenType, token.Text,
                                                  token.Value));

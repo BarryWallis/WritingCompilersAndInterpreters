@@ -27,9 +27,13 @@ public class ParserMessageListener : IObserver<Message>
                     $"pos={tokenMessage.Position,2}, text=\"{tokenMessage.Text}\"");
                 if (tokenMessage.Value is not null)
                 {
-                    Debug.Assert(tokenMessage.Value is string);
-                    string tokenValue = tokenMessage.Value! as string ?? throw new InvalidOperationException();
-                    tokenValue = tokenMessage.TokenType == PascalTokenType.String ? $"\"{tokenValue!}\"" : tokenValue!;
+                    Debug.Assert(tokenMessage.Value.ToString() is not null);
+                    string tokenValue = tokenMessage.Value.ToString()!;
+                    if (tokenMessage.TokenType == PascalTokenType.String)
+                    {
+                        tokenValue = tokenMessage.TokenType == PascalTokenType.String ? $"\"{tokenValue!}\"" 
+                                                                                             : tokenValue!;
+                    }
                     Console.WriteLine($">>>                 value={tokenValue}");
                 }
                 break;
@@ -37,7 +41,7 @@ public class ParserMessageListener : IObserver<Message>
                 const int prefixWidth = 5;
                 int spaceCount = prefixWidth + syntaxErrorMessage.Position;
                 StringBuilder flagBuffer = new();
-                _ = flagBuffer.Append(new string(' ', spaceCount)).Append($"^\n*** {syntaxErrorMessage.ErrorMessage}");
+                _ = flagBuffer.Append(new string(' ', spaceCount - 1)).Append($"^\n*** {syntaxErrorMessage.ErrorMessage}");
                 if (syntaxErrorMessage.TokenText is not null)
                 {
                     _ = flagBuffer.Append($" [at \"{syntaxErrorMessage.TokenText}\"]");

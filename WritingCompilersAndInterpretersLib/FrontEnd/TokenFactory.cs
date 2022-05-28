@@ -28,7 +28,7 @@ public class TokenFactory
         char currentCharacter = _source.GetCurrentCharacter();
         if (currentCharacter == Source.EndOfFile)
         {
-            token = new EndOfFileToken();
+            token = new EndOfFileToken(_source);
         }
         else if (char.IsLetter(currentCharacter))
         {
@@ -48,7 +48,7 @@ public class TokenFactory
         }
         else
         {
-            token = new PascalErrorToken(PascalErrorCode.InvalidCharacter, currentCharacter.ToString());
+            token = new PascalErrorToken(PascalErrorCode.InvalidCharacter, currentCharacter.ToString(), _source);
             _ = _source.GetNextCharacter();
         }
 
@@ -74,7 +74,7 @@ public class TokenFactory
             }
             else
             {
-                currentCharacter = _source.GetCurrentCharacter();
+                currentCharacter = _source.GetNextCharacter();
             }
         }
     }
