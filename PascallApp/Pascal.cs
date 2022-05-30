@@ -1,6 +1,7 @@
 ﻿using WritingCompilersAndInterpretersLib.BackEnd;
 using WritingCompilersAndInterpretersLib.FrontEnd;
 using WritingCompilersAndInterpretersLib.Intermediate;
+using WritingCompilersAndInterpretersLib.Utility;
 
 namespace PascalApp;
 
@@ -31,7 +32,14 @@ public class Pascal
             IIntermediateCode? intermediateCode = parser.IntermediateCode; // TODO Remove question mark
             ISymbolTable? symbolTable = Parser.SymbolTable; // TODO Remove question mark
 
-            backEnd.Process(intermediateCode!, symbolTable!); // TODO: Remove bangs
+            ISymbolTableStack symbolTableStack = parser.SymbolTableStack;
+            if (crossReference)
+            {
+                CrossReferencer crossReferencer = new();
+                crossReferencer.Print(symbolTableStack);
+            }
+
+            backEnd.Process(intermediateCode!, symbolTableStack!); // TODO: Remove bangs
         }
         catch (Exception exception)
         {

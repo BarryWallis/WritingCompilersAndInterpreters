@@ -6,7 +6,7 @@ namespace WritingCompilersAndInterpretersLib.BackEnd.Compiler;
 public class CodeGenerator : BackEnd
 {
     /// <inheritdoc/>
-    public override void Process(IIntermediateCode intermediateCode, ISymbolTable symbolTable)
+    public override void Process(IIntermediateCode intermediateCode, ISymbolTableStack symbolTableStack)
     {
         long startTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         long endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();

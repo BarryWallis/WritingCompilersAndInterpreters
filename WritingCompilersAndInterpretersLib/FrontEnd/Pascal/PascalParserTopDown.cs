@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 
+using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
@@ -35,17 +36,20 @@ public class PascalParserTopDown : Parser
         {
             while ((token = GetNextToken()) is not EndOfFileToken)
             {
-                if (token.TokenType == PascalTokenType.Error)
+                Debug.Assert(token.TokenType is not null);
+                if (token.TokenType == PascalTokenType.Identifier)
+                {
+                    Debug.Assert(token.Text is not null);
+                    string name = token.Text.ToLowerInvariant();
+                    ISymbolTableEntry? symbolTableEntry = SymbolTableStack.Lookup(name);
+                    symbolTableEntry ??= SymbolTableStack.EnterLocal(name);
+                    Debug.Assert(symbolTableEntry is not null);
+                    symbolTableEntry.AppendLineNumber(token.LineNumber);
+                }
+                else if (token.TokenType == PascalTokenType.Error)
                 {
                     Debug.Assert(token.Value is PascalErrorCode);
                     PascalErrorHandler.Flag(token, (token.Value as PascalErrorCode)!, this);
-                }
-                else
-                {
-                    Debug.Assert(token.Text is not null);
-                    Debug.Assert(token.TokenType is not null);
-                    SendMessage(new TokenMessage(token.LineNumber, token.Position, token.TokenType, token.Text,
-                                                 token.Value));
                 }
             }
 

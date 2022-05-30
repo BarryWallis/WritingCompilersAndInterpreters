@@ -16,5 +16,5 @@ public abstract class BackEnd : MessageHandler
     /// </summary>
     /// <param name="intermediateCode">The intermediate code to process.</param>
     /// <param name="symbolTable">The symbol table to process.</param>
-    public abstract void Process(IIntermediateCode intermediateCode, ISymbolTable symbolTable);
+    public abstract void Process(IIntermediateCode intermediateCode, ISymbolTableStack symbolTableStack);
 }

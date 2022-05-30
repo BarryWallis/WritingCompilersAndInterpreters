@@ -1,5 +1,6 @@
 ﻿using WritingCompilersAndInterpretersLib.BackEnd.Interpreter;
 using WritingCompilersAndInterpretersLib.Intermediate;
+using WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
 using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersTests;
@@ -17,16 +18,6 @@ public class ExecutorTests
             => InterpreterSummaryMessage = value as InterpreterSummaryMessage ?? throw new InvalidCastException();
     }
 
-    internal class IntermediateCode : IIntermediateCode
-    {
-
-    }
-
-    internal class SymbolTable : ISymbolTable
-    {
-
-    }
-
     [TestMethod]
     public void Executor_AnyParameters_SendInterpreterSummaryMessage()
     {
@@ -34,8 +25,12 @@ public class ExecutorTests
         TestObserver testObserver = new();
         _ = executor.Subscribe(testObserver);
         InterpreterSummaryMessage expected = new(0, 0, 0f);
-        executor.Process(new IntermediateCode(), new SymbolTable());
+        executor.Process(new IntermediateCode(), new SymbolTableStack());
 
         Assert.AreEqual(expected, testObserver.InterpreterSummaryMessage);
     }
+}
+
+internal class IntermediateCode : IIntermediateCode
+{
 }

@@ -1,6 +1,7 @@
 ﻿using WritingCompilersAndInterpretersLib.BackEnd.Compiler;
 using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Message;
+using WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
 
 namespace WritingCompilersAndInterpretersTests;
 
@@ -17,16 +18,6 @@ public class CodeGeneratorTests
             => CompilerSummaryMessage = value as CompilerSummaryMessage ?? throw new InvalidCastException();
     }
 
-    internal class IntermediateCode : IIntermediateCode
-    {
-
-    }
-
-    internal class SymbolTable : ISymbolTable
-    {
-
-    }
-
     [TestMethod]
     public void Process_AnyParameters_SendCompilerSummaryMessage()
     {
@@ -34,7 +25,7 @@ public class CodeGeneratorTests
         TestObserver testObserver = new();
         _ = codeGenerator.Subscribe(testObserver);
         CompilerSummaryMessage expected = new(0, 0f);
-        codeGenerator.Process(new IntermediateCode(), new SymbolTable());
+        codeGenerator.Process(new IntermediateCode(), new SymbolTableStack());
 
         Assert.AreEqual(expected, testObserver.CompilerSummaryMessage);
     }

@@ -12,6 +12,15 @@ public abstract class Parser : MessageHandler
     /// <value>The <see cref="Parser"/> symbol table.</value>
     public static ISymbolTable? SymbolTable { get; protected set; } = null;
 
+    private static readonly ISymbolTableStack _symbolTableStack = SymbolTableFactory.CreateSymbolTableStack();
+    /// <value>The symbol table stack.</value>
+#pragma warning disable CA1822 // Mark members as static
+    public ISymbolTableStack SymbolTableStack => _symbolTableStack;
+#pragma warning restore CA1822 // Mark members as static
+
+    /// <value>the message handler.</value>
+    protected static MessageHandler MessageHandler { get; } = new();
+
     /// <value>The scanner to use with this <see cref="Parser"/>.</value>
     protected Scanner Scanner { get; init; }
 

@@ -6,7 +6,7 @@ namespace WritingCompilersAndInterpretersLib.BackEnd.Interpreter;
 public class Executor : BackEnd
 {
     /// <inheritdoc/>
-    public override void Process(IIntermediateCode intermediateCode, ISymbolTable symbolTable)
+    public override void Process(IIntermediateCode intermediateCode, ISymbolTableStack symbolTableStack)
     {
         long startTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         long endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
