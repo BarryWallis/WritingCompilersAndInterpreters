@@ -2,7 +2,7 @@
 
 public class MessageHandler : IObservable<Message>
 {
-    private readonly IList<IObserver<Message>> _observers = new List<IObserver<Message>>();
+    protected IList<IObserver<Message>> _observers = new List<IObserver<Message>>();
 
     /// <value>The number of subscribers.</value> 
     public int SubscriberCount => _observers.Count;

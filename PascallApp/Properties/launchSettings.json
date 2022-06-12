@@ -2,7 +2,7 @@
   "profiles": {
     "PascalApp": {
       "commandName": "Project",
-      "commandLineArgs": "compile -x \"C:\\Users\\Barry\\OneDrive\\Documents\\WCI Source Files\\Chapter4\\scannertest.txt\""
+      "commandLineArgs": "execute -i \"C:\\Users\\Barry\\OneDrive\\Documents\\WCI Source Files\\Chapter5\\assignerrors.txt\""
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 
+using WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Message;
 
@@ -10,10 +11,7 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal;
 /// </summary>
 public class PascalParserTopDown : Parser
 {
-    /// <summary>
-    /// Handle any parser errors.
-    /// </summary>
-    protected static PascalErrorHandler PascalErrorHandler { get; } = new();
+    protected readonly PascalErrorHandler errorHandler = new();
 
     public override int ErrorCount => PascalErrorHandler.ErrorCount;
 
@@ -26,41 +24,55 @@ public class PascalParserTopDown : Parser
     }
 
     /// <summary>
+    /// Constructor for subclasses.
+    /// </summary>
+    /// <param name="parent">The parent parser.</param>
+    protected PascalParserTopDown(PascalParserTopDown parent) : base(parent.Scanner) 
+        => _observers = parent._observers;
+
+    /// <summary>
     /// Parse a Pascal source program and generate the symbol table.
     /// </summary>
     public override void Parse()
     {
-        Token token;
         long startTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        IntermediateCode = IntermediateCodeFactory.CreateIntermediateCode();
         try
         {
-            while ((token = GetNextToken()) is not EndOfFileToken)
+            Token token = GetNextToken();
+            IIntermediateCodeNode? rootNode = null;
+            if (token.TokenType == PascalTokenType.Begin)
             {
-                Debug.Assert(token.TokenType is not null);
-                if (token.TokenType == PascalTokenType.Identifier)
-                {
-                    Debug.Assert(token.Text is not null);
-                    string name = token.Text.ToLowerInvariant();
-                    ISymbolTableEntry? symbolTableEntry = SymbolTableStack.Lookup(name);
-                    symbolTableEntry ??= SymbolTableStack.EnterLocal(name);
-                    Debug.Assert(symbolTableEntry is not null);
-                    symbolTableEntry.AppendLineNumber(token.LineNumber);
-                }
-                else if (token.TokenType == PascalTokenType.Error)
-                {
-                    Debug.Assert(token.Value is PascalErrorCode);
-                    PascalErrorHandler.Flag(token, (token.Value as PascalErrorCode)!, this);
-                }
+                StatementParser statementParser = new(this);
+                rootNode = statementParser.Parse(token);
+                Debug.Assert(CurrentToken is not null);
+                token = CurrentToken;
+            }
+            else
+            {
+                errorHandler.Flag(token, PascalErrorCode.UnexpectedToken, this);
+            }
+
+            if (token.TokenType != PascalTokenType.Dot)
+            {
+                errorHandler.Flag(token, PascalErrorCode.MissingPeriod, this);
+            }
+            Debug.Assert(CurrentToken is not null);
+            token = CurrentToken;
+
+            if (rootNode is not null)
+            {
+                IntermediateCode.Root = rootNode;
             }
 
             long endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             float elapsedTime = (endTime - startTime) / 1000f;
             SendMessage(new ParserSummaryMessage(token.LineNumber, ErrorCount, elapsedTime));
         }
+
         catch (IOException)
         {
-            PascalErrorHandler.AbortTranslation(PascalErrorCode.IOError, this);
+            errorHandler.AbortTranslation(PascalErrorCode.IOError, this);
         }
-
     }
 }

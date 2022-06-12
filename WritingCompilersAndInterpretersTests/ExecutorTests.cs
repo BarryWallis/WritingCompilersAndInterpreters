@@ -33,4 +33,5 @@ public class ExecutorTests
 
 internal class IntermediateCode : IIntermediateCode
 {
+    IIntermediateCodeNode? IIntermediateCode.Root { get; set; }
 }

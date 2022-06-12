@@ -1,4 +1,6 @@
-﻿using WritingCompilersAndInterpretersLib.BackEnd;
+﻿using System.Diagnostics;
+
+using WritingCompilersAndInterpretersLib.BackEnd;
 using WritingCompilersAndInterpretersLib.FrontEnd;
 using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Utility;
@@ -29,17 +31,29 @@ public class Pascal
             _ = backEnd.Subscribe(new BackEndMessageListener());
 
             parser.Parse();
-            IIntermediateCode? intermediateCode = parser.IntermediateCode; // TODO Remove question mark
-            ISymbolTable? symbolTable = Parser.SymbolTable; // TODO Remove question mark
+            source.Close();
 
-            ISymbolTableStack symbolTableStack = parser.SymbolTableStack;
-            if (crossReference)
+            if (parser.ErrorCount == 0)
             {
-                CrossReferencer crossReferencer = new();
-                crossReferencer.Print(symbolTableStack);
-            }
+                IIntermediateCode? intermediateCode = parser.IntermediateCode; // TODO Remove question mark
+                ISymbolTable? symbolTable = Parser.SymbolTable; // TODO Remove question mark
 
-            backEnd.Process(intermediateCode!, symbolTableStack!); // TODO: Remove bangs
+                ISymbolTableStack symbolTableStack = parser.SymbolTableStack;
+                if (crossReference)
+                {
+                    CrossReferencer crossReferencer = new();
+                    crossReferencer.Print(symbolTableStack);
+                }
+
+                if (intermediate)
+                {
+                    ParseTreePrinter parseTreePrinter = new(Console.Out);
+                    Debug.Assert(intermediateCode is not null);
+                    parseTreePrinter.Print(intermediateCode);
+                }
+
+                backEnd.Process(intermediateCode!, symbolTableStack!); // TODO: Remove bangs 
+            }
         }
         catch (Exception exception)
         {

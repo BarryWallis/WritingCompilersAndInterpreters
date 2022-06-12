@@ -18,7 +18,9 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal
         /// </summary>
         /// <param name="errorCode">The error code.</param>
         /// <param name="parser">The parser.</param>
-        public static void AbortTranslation(PascalErrorCode errorCode, Parser parser)
+#pragma warning disable CA1822 // Mark members as static
+        public void AbortTranslation(PascalErrorCode errorCode, Parser parser)
+#pragma warning restore CA1822 // Mark members as static
         {
             string fatalText = $"FATAL ERROR: {errorCode}";
             parser.SendMessage(new SyntaxErrorMessage(0, 0, "", fatalText));
@@ -31,7 +33,7 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal
         /// <param name="errorToken">The bad token.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="pascalParserTopDown">The parser.</param>
-        public static void Flag(Token errorToken, PascalErrorCode errorCode, Parser parser)
+        public void Flag(Token errorToken, PascalErrorCode errorCode, Parser parser)
         {
             Debug.Assert(errorCode.ToString() is not null);
             parser.SendMessage(new SyntaxErrorMessage(errorToken.LineNumber, errorToken.Position, errorToken.Text,
