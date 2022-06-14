@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WritingCompilersAndInterpretersLib.Intermediate;
+﻿namespace WritingCompilersAndInterpretersLib.Intermediate;
 
 /// <summary>
 /// The symbol table stack interface.
@@ -15,7 +9,7 @@ public interface ISymbolTableStack
     public int CurrentNestingLevel { get; }
 
     /// <value>The local symbol table at the top of the stack.</value>
-    public ISymbolTable LocalSymbolTable { get;  }
+    public ISymbolTable LocalSymbolTable { get; }
 
     /// <summary>
     /// Create and enter a new ebtry in the local symbol table.

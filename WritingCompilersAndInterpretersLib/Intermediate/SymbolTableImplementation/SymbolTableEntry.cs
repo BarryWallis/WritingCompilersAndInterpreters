@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
+﻿namespace WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
 
 /// <summary>
 /// A symbol table entry.
@@ -45,7 +43,7 @@ public class SymbolTableEntry : ISymbolTableEntry
 
     /// <inheritdoc/>
     public object? GetAttribute(SymbolTableKey symbolTableKey)
-        => _attributes.ContainsKey(symbolTableKey) ? _attributes[symbolTableKey] : (object?)null;
+        => _attributes.ContainsKey(symbolTableKey) ? _attributes[symbolTableKey] : null;
 
     /// <inheritdoc/>
     public void SetAttribute(SymbolTableKey symbolTableKey, object value)
@@ -54,9 +52,9 @@ public class SymbolTableEntry : ISymbolTableEntry
         {
             _attributes[symbolTableKey] = value;
         }
-        else 
-        { 
-            _attributes.Add(symbolTableKey, value); 
+        else
+        {
+            _attributes.Add(symbolTableKey, value);
         }
     }
 }

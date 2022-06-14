@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Intermediate;
+﻿using WritingCompilersAndInterpretersLib.Intermediate;
 
 namespace WritingCompilersAndInterpretersLib.Utility;
 
@@ -14,7 +8,7 @@ namespace WritingCompilersAndInterpretersLib.Utility;
 public class CrossReferencer
 {
     private const int _nameWidth = 16;
-    private const string _numbersLabel =     " Line numbers    ";
+    private const string _numbersLabel = " Line numbers    ";
     private const string _numbersUnderline = " ------------    ";
     private static readonly int _labelWidth = _numbersLabel.Length;
     private static readonly int _indentWidth = _nameWidth + _labelWidth;

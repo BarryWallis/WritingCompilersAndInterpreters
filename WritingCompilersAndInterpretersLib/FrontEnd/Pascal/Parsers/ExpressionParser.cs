@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Dynamic;
 
 using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;

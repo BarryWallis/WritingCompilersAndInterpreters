@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
+﻿namespace WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
 
 /// <summary>
 /// An implementation of the symbol table stack.
@@ -34,7 +27,7 @@ public class SymbolTableStack : ISymbolTableStack
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentException">Must have a name.</exception>
-    public ISymbolTableEntry EnterLocal(string name) 
+    public ISymbolTableEntry EnterLocal(string name)
         => string.IsNullOrWhiteSpace(name)
                  ? throw new ArgumentException("Must have a value", nameof(name))
                  : _symbolTableStack[CurrentNestingLevel].Enter(name);

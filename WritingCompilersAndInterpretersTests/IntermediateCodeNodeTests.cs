@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using WritingCompilersAndInterpretersLib.Intermediate;
+﻿using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
 
 namespace WritingCompilersAndInterpretersTests;
@@ -17,7 +9,7 @@ public class IntermediateCodeNodeTests
     [TestMethod]
     public void AddChild_AddAChildNode_ChildNodeAddedToChildrenAndReturnChild()
     {
-        IIntermediateCodeNode root 
+        IIntermediateCodeNode root
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Subtract);
         IIntermediateCodeNode child
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Subtract);

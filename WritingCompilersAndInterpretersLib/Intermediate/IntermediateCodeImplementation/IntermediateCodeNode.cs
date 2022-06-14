@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
 
@@ -17,7 +13,7 @@ public record IntermediateCodeNode : IIntermediateCodeNode
 
     public IntermediateCodeNodeType NodeType { get; }
 
-    public IIntermediateCodeNode? Parent { get; private set; } = null;
+    public IIntermediateCodeNode? Parent { get; set; } = null;
 
     public IReadOnlyCollection<IIntermediateCodeNode> Children => _children;
 
@@ -32,17 +28,20 @@ public record IntermediateCodeNode : IIntermediateCodeNode
     /// <inheritdoc/>
     public IIntermediateCodeNode? AddChild(IIntermediateCodeNode? child)
     {
-#pragma warning disable CS8604 // Possible null reference argument.
-        _children.Add(child);  // Null items are allowed to be added to a List.
-#pragma warning restore CS8604 // Possible null reference argument.
+        if (child is not null)
+        {
+            _children.Add(child);
+            Debug.Assert(child is IntermediateCodeNode);
+            (child as IntermediateCodeNode)!.Parent = this;
+        }
         return child;
     }
 
     /// <inheritdoc/>
     public IIntermediateCodeNode Copy()
     {
-        IntermediateCodeNode copy 
-            = IntermediateCodeFactory.CreateIntermediateCodeNode(NodeType) as IntermediateCodeNode 
+        IntermediateCodeNode copy
+            = IntermediateCodeFactory.CreateIntermediateCodeNode(NodeType) as IntermediateCodeNode
               ?? throw new InvalidOperationException($"Could not create {nameof(IntermediateCodeNode)}");
         foreach (KeyValuePair<IntermediateCodeKey, object> keyValuePair in _attributes)
         {
@@ -53,7 +52,7 @@ public record IntermediateCodeNode : IIntermediateCodeNode
     }
 
     /// <inheritdoc/>
-    public object? GetAttribute(IntermediateCodeKey key) 
+    public object? GetAttribute(IntermediateCodeKey key)
         => _attributes.ContainsKey(key) ? _attributes[key] : null;
 
     /// <inheritdoc/>

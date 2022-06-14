@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
+﻿using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
 
 namespace WritingCompilersAndInterpretersLib.Intermediate;
 
@@ -15,7 +13,7 @@ public interface IIntermediateCodeNode
     /// <summary>
     /// The parent of this node.
     /// </summary>
-    public IIntermediateCodeNode? Parent { get; }
+    public IIntermediateCodeNode? Parent { get; protected set; }
 
     /// <value>The list of all the nodes children."</value>
     public IReadOnlyCollection<IIntermediateCodeNode> Children { get; }

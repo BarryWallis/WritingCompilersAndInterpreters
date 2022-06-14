@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
+﻿using WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
 
 namespace WritingCompilersAndInterpretersLib.Intermediate;
 
@@ -33,7 +27,7 @@ public static class SymbolTableFactory
     /// <param name="symbolTable">The symbol table that contains the symbol table entry.</param>
     /// <returns>the new symbol table.</returns>
     /// <exception cref="ArgumentException">Must have a value.</exception>
-    public static ISymbolTableEntry CreateSymbolTableEntry(string name, ISymbolTable symbolTable) 
+    public static ISymbolTableEntry CreateSymbolTableEntry(string name, ISymbolTable symbolTable)
         => string.IsNullOrWhiteSpace(name)
            ? throw new ArgumentException("Must have a value", nameof(name))
            : new SymbolTableEntry(name, symbolTable);

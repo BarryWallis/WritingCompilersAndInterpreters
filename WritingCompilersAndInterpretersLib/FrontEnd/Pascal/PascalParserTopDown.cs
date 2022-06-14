@@ -27,7 +27,7 @@ public class PascalParserTopDown : Parser
     /// Constructor for subclasses.
     /// </summary>
     /// <param name="parent">The parent parser.</param>
-    protected PascalParserTopDown(PascalParserTopDown parent) : base(parent.Scanner) 
+    protected PascalParserTopDown(PascalParserTopDown parent) : base(parent.Scanner)
         => _observers = parent._observers;
 
     /// <summary>

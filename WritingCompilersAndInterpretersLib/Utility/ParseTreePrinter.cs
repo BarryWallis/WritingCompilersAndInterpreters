@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 
 using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
-using WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
 
 namespace WritingCompilersAndInterpretersLib.Utility;
 
@@ -93,7 +88,7 @@ public class ParseTreePrinter
     {
         string saveIndentation = _indentation;
         _indentation += _indent;
-        children.ToList().ForEach(n=>PrintNode(n));
+        children.ToList().ForEach(n => PrintNode(n));
         _indentation = saveIndentation;
     }
 

@@ -23,7 +23,7 @@ public class CompountStatementParser : StatementParser
         }
 
         token = GetNextToken();
-        IIntermediateCodeNode compundNode 
+        IIntermediateCodeNode compundNode
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Compound);
         StatementParser statementParser = new(this);
         statementParser.ParseList(token, compundNode, PascalTokenType.End, PascalErrorCode.MissingEnd);

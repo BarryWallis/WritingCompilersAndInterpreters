@@ -31,7 +31,7 @@ public class ParserMessageListener : IObserver<Message>
                     string tokenValue = tokenMessage.Value.ToString()!;
                     if (tokenMessage.TokenType == PascalTokenType.String)
                     {
-                        tokenValue = tokenMessage.TokenType == PascalTokenType.String ? $"\"{tokenValue!}\"" 
+                        tokenValue = tokenMessage.TokenType == PascalTokenType.String ? $"\"{tokenValue!}\""
                                                                                              : tokenValue!;
                     }
                     Console.WriteLine($">>>                 value={tokenValue}");

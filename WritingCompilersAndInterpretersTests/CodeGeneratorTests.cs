@@ -1,7 +1,6 @@
 ﻿using WritingCompilersAndInterpretersLib.BackEnd.Compiler;
-using WritingCompilersAndInterpretersLib.Intermediate;
-using WritingCompilersAndInterpretersLib.Message;
 using WritingCompilersAndInterpretersLib.Intermediate.SymbolTableImplementation;
+using WritingCompilersAndInterpretersLib.Message;
 
 namespace WritingCompilersAndInterpretersTests;
 

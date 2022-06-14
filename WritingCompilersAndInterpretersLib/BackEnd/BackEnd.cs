@@ -8,8 +8,8 @@ namespace WritingCompilersAndInterpretersLib.BackEnd;
 /// </summary>
 public abstract class BackEnd : MessageHandler
 {
-    protected ISymbolTable? SymbolTable { get; set; } = null;
-    protected IIntermediateCode? IntermediateCode { get; set; } = null;
+    protected ISymbolTableStack? SymbolTableStack { get; set; }
+    protected IIntermediateCode? IntermediateCode { get; set; }
 
     /// <summary>
     /// Process the <paramref name="intermediateCode"/> and <paramref name="symbolTable"/>.

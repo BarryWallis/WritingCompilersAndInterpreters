@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
+﻿using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
 
 namespace WritingCompilersAndInterpretersLib.Intermediate;
 
@@ -24,6 +18,6 @@ public static class IntermediateCodeFactory
     /// </summary>
     /// <param name="nodeType">The type of intermediate code node.</param>
     /// <returns>The intermediate code node.</returns>
-    public static IIntermediateCodeNode CreateIntermediateCodeNode(IntermediateCodeNodeType nodeType) 
+    public static IIntermediateCodeNode CreateIntermediateCodeNode(IntermediateCodeNodeType nodeType)
         => new IntermediateCodeNode(nodeType);
 }
