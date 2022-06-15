@@ -7,6 +7,15 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 
 public class AssignmentStatementParser : StatementParser
 {
+    private readonly static ISet<PascalTokenType> _colonEqualsTokenTypes;
+
+    static AssignmentStatementParser()
+    {
+        _colonEqualsTokenTypes = new HashSet<PascalTokenType>(ExpressionParser._expressionStartTokenTypes);
+        _ = _colonEqualsTokenTypes.Add(PascalTokenType.ColonEquals);
+        StatementFollowTokenTypes.ToList().ForEach(tt => _colonEqualsTokenTypes.Add(tt));
+    }
+
     public AssignmentStatementParser(PascalParserTopDown parent) : base(parent)
     {
     }
@@ -30,12 +39,13 @@ public class AssignmentStatementParser : StatementParser
         Debug.Assert(targetId is not null);
         targetId.AppendLineNumber(token.LineNumber);
 
-        token = GetNextToken();
+        _ = GetNextToken();
         IIntermediateCodeNode variableNode
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Variable);
         variableNode.SetAttribute(IntermediateCodeKey.Id, targetId);
         _ = assignNode.AddChild(variableNode);
 
+        token = Synchronize(_colonEqualsTokenTypes);
         if (token.TokenType == PascalTokenType.ColonEquals)
         {
             token = GetNextToken();

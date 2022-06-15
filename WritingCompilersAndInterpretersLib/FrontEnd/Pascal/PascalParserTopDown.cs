@@ -75,4 +75,27 @@ public class PascalParserTopDown : Parser
             errorHandler.AbortTranslation(PascalErrorCode.IOError, this);
         }
     }
+
+    /// <summary>
+    /// Synchronize the parser.
+    /// </summary>
+    /// <param name="synchronizationsTokenTypes">The set of token types for syncronizing the parser.</param>
+    /// <returns>The token where the parser has synchronized.</returns>
+    public Token Synchronize(ISet<PascalTokenType> synchronizationsTokenTypes)
+    {
+        Debug.Assert(CurrentToken is not null);
+        Token token = CurrentToken;
+        Debug.Assert(token.TokenType is not null);
+        if (!synchronizationsTokenTypes.Contains(token.TokenType))
+        {
+            errorHandler.Flag(token, PascalErrorCode.UnexpectedToken, this);
+            do
+            {
+                token = GetNextToken();
+                Debug.Assert(token.TokenType is not null);
+            } while ((token is not EndOfFileToken) && !synchronizationsTokenTypes.Contains(token.TokenType));
+        }
+
+        return token;
+    }
 }

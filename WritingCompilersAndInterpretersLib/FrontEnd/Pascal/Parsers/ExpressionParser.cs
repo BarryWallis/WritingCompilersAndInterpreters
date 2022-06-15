@@ -7,6 +7,18 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 
 public class ExpressionParser : StatementParser
 {
+    internal static IEnumerable<PascalTokenType> _expressionStartTokenTypes = new HashSet<PascalTokenType>()
+    {
+        PascalTokenType.Plus,
+        PascalTokenType.Minus,
+        PascalTokenType.Identifier,
+        PascalTokenType.Integer,
+        PascalTokenType.Real,
+        PascalTokenType.String,
+        PascalTokenType.Not,
+        PascalTokenType.LeftParen,
+    };
+
     private readonly Dictionary<PascalTokenType, IntermediateCodeNodeType> _relationalOperators = new()
     {
         [PascalTokenType.Equal] = IntermediateCodeNodeType.Eq,
@@ -32,7 +44,6 @@ public class ExpressionParser : StatementParser
         [PascalTokenType.Mod] = IntermediateCodeNodeType.Mod,
         [PascalTokenType.And] = IntermediateCodeNodeType.And,
     };
-
     public ExpressionParser(PascalParserTopDown parent) : base(parent)
     {
     }
@@ -52,7 +63,6 @@ public class ExpressionParser : StatementParser
     private IIntermediateCodeNode ParseExpression(Token token)
     {
         IIntermediateCodeNode? rootNode = ParseSimpleExpression(token);
-        Debug.Assert(rootNode is not null);
         Debug.Assert(CurrentToken is not null);
         token = CurrentToken;
         Debug.Assert(token.TokenType is not null);

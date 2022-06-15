@@ -7,6 +7,26 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 
 public class StatementParser : PascalParserTopDown
 {
+    protected static readonly ISet<PascalTokenType> StatementStartTokenTypes = new HashSet<PascalTokenType>()
+    {
+        PascalTokenType.Begin,
+        PascalTokenType.Case,
+        PascalTokenType.For,
+        PascalTokenType.If,
+        PascalTokenType.Repeat,
+        PascalTokenType.While,
+        PascalTokenType.Identifier,
+        PascalTokenType.Semicolon,
+    };
+    protected static readonly ISet<PascalTokenType> StatementFollowTokenTypes = new HashSet<PascalTokenType>()
+    {
+        PascalTokenType.Semicolon,
+        PascalTokenType.End,
+        PascalTokenType.Else,
+        PascalTokenType.Until,
+        PascalTokenType.Dot,
+    };
+
     /// <summary>
     /// Create new statement parser.
     /// </summary>
@@ -16,6 +36,11 @@ public class StatementParser : PascalParserTopDown
 
     }
 
+    /// <summary>
+    /// Parse a statement.
+    /// </summary>
+    /// <param name="token">The initial token.</param>
+    /// <returns>The root node.</returns>
     public virtual IIntermediateCodeNode Parse(Token token)
     {
         IIntermediateCodeNode statementNode;
@@ -28,6 +53,31 @@ public class StatementParser : PascalParserTopDown
         {
             AssignmentStatementParser assignmentStatementParser = new(this);
             statementNode = assignmentStatementParser.Parse(token);
+        }
+        else if (token.TokenType == PascalTokenType.Repeat)
+        {
+            RepeatStatementParser repeatStatementParser = new(this);
+            statementNode = repeatStatementParser.Parse(token);
+        }
+        else if (token.TokenType == PascalTokenType.While)
+        {
+            WhileStatementParser whileStatementParser = new(this);
+            statementNode = whileStatementParser.Parse(token);
+        }
+        else if (token.TokenType == PascalTokenType.For)
+        {
+            ForStatementParser forStatementParser = new(this);
+            statementNode = forStatementParser.Parse(token);
+        }
+        else if (token.TokenType == PascalTokenType.If)
+        {
+            IfStatementParser ifStatementParser = new(this);
+            statementNode = ifStatementParser.Parse(token);
+        }
+        else if (token.TokenType == PascalTokenType.Case)
+        {
+            CaseStatementParser caseStatementParser = new(this);
+            statementNode = caseStatementParser.Parse(token);
         }
         else
         {
@@ -57,6 +107,9 @@ public class StatementParser : PascalParserTopDown
     public void ParseList(Token token, IIntermediateCodeNode parentNode, PascalTokenType terminator,
                              PascalErrorCode errorCode)
     {
+        ISet<PascalTokenType> terminatorTokenTypes = new HashSet<PascalTokenType>(StatementStartTokenTypes);
+        _ = terminatorTokenTypes.Add(terminator);
+
         while (token is not EndOfFileToken && token.TokenType != terminator)
         {
             IIntermediateCodeNode statementNode = Parse(token);
@@ -68,17 +121,14 @@ public class StatementParser : PascalParserTopDown
             TokenType tokenType = token.TokenType;
             if (tokenType == PascalTokenType.Semicolon)
             {
-                token = GetNextToken();
+                _ = GetNextToken();
             }
-            else if (tokenType == PascalTokenType.Identifier)
+            else if (StatementStartTokenTypes.Contains(tokenType))
             {
                 errorHandler.Flag(token, PascalErrorCode.MissingSemicolon, this);
             }
-            else if (tokenType != terminator)
-            {
-                errorHandler.Flag(token, PascalErrorCode.UnexpectedToken, this);
-                token = GetNextToken();
-            }
+
+            token = Synchronize(terminatorTokenTypes);
         }
 
         if (token.TokenType == terminator)
