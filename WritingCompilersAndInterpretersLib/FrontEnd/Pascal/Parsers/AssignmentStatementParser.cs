@@ -13,7 +13,7 @@ public class AssignmentStatementParser : StatementParser
     {
         _colonEqualsTokenTypes = new HashSet<PascalTokenType>(ExpressionParser._expressionStartTokenTypes);
         _ = _colonEqualsTokenTypes.Add(PascalTokenType.ColonEquals);
-        StatementFollowTokenTypes.ToList().ForEach(tt => _colonEqualsTokenTypes.Add(tt));
+        _colonEqualsTokenTypes.UnionWith(StatementFollowTokenTypes);
     }
 
     public AssignmentStatementParser(PascalParserTopDown parent) : base(parent)

@@ -41,7 +41,7 @@ public class StatementParser : PascalParserTopDown
     /// </summary>
     /// <param name="token">The initial token.</param>
     /// <returns>The root node.</returns>
-    public virtual IIntermediateCodeNode Parse(Token token)
+    public virtual IIntermediateCodeNode? Parse(Token token)
     {
         IIntermediateCodeNode statementNode;
         if (token.TokenType == PascalTokenType.Begin)
@@ -112,7 +112,7 @@ public class StatementParser : PascalParserTopDown
 
         while (token is not EndOfFileToken && token.TokenType != terminator)
         {
-            IIntermediateCodeNode statementNode = Parse(token);
+            IIntermediateCodeNode? statementNode = Parse(token);
             _ = parentNode.AddChild(statementNode);
 
             Debug.Assert(CurrentToken is not null);

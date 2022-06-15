@@ -53,14 +53,14 @@ public class ExpressionParser : StatementParser
     /// </summary>
     /// <param name="token">The initial token.</param>
     /// <returns>The root node of the generated parse tree.</returns>
-    public override IIntermediateCodeNode Parse(Token token) => ParseExpression(token);
+    public override IIntermediateCodeNode? Parse(Token token) => ParseExpression(token);
 
     /// <summary>
     /// Parse an expression.
     /// </summary>
     /// <param name="token">The initial token.</param>
     /// <returns>The root node of the generated parse tree.</returns>
-    private IIntermediateCodeNode ParseExpression(Token token)
+    private IIntermediateCodeNode? ParseExpression(Token token)
     {
         IIntermediateCodeNode? rootNode = ParseSimpleExpression(token);
         Debug.Assert(CurrentToken is not null);
