@@ -3,9 +3,9 @@ using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementa
 
 namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 
-public class CompountStatementParser : StatementParser
+public class CompoundStatementParser : StatementParser
 {
-    public CompountStatementParser(PascalParserTopDown parent) : base(parent)
+    public CompoundStatementParser(PascalParserTopDown parent) : base(parent)
     {
     }
 

@@ -46,7 +46,7 @@ public class StatementParser : PascalParserTopDown
         IIntermediateCodeNode statementNode;
         if (token.TokenType == PascalTokenType.Begin)
         {
-            CompountStatementParser compoundStatementParser = new(this);
+            CompoundStatementParser compoundStatementParser = new(this);
             statementNode = compoundStatementParser.Parse(token);
         }
         else if (token.TokenType == PascalTokenType.Identifier)

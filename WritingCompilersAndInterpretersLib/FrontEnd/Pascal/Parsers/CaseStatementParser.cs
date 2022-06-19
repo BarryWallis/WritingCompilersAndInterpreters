@@ -2,12 +2,12 @@
 
 namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers
 {
-    internal class CaseStatementParser
+    internal class CaseStatementParser : StatementParser
     {
-        public CaseStatementParser(StatementParser statementParser)
+        public CaseStatementParser(StatementParser parent) : base(parent)
         {
         }
 
-        internal IIntermediateCodeNode Parse(Token token) => throw new NotImplementedException();
+        public override IIntermediateCodeNode Parse(Token token) => throw new NotImplementedException();
     }
 }

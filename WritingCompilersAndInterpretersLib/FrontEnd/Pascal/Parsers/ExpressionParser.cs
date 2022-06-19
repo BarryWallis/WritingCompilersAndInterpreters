@@ -44,6 +44,7 @@ public class ExpressionParser : StatementParser
         [PascalTokenType.Mod] = IntermediateCodeNodeType.Mod,
         [PascalTokenType.And] = IntermediateCodeNodeType.And,
     };
+
     public ExpressionParser(PascalParserTopDown parent) : base(parent)
     {
     }
