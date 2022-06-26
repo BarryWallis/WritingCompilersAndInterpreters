@@ -25,15 +25,20 @@ public class StatementExecutor : Executor
         switch (nodeType)
         {
             case IntermediateCodeNodeType.Compound:
-                {
-                    CompoundExecutor compoundExecutor = new(this);
-                    return compoundExecutor.Execute(node);
-                }
+                CompoundExecutor compoundExecutor = new(this);
+                return compoundExecutor.Execute(node);
             case IntermediateCodeNodeType.Assign:
-                {
-                    AssignmentExecutor assignmentExecutor = new(this);
-                    return assignmentExecutor.Execute(node);
-                }
+                AssignmentExecutor assignmentExecutor = new(this);
+                return assignmentExecutor.Execute(node);
+            case IntermediateCodeNodeType.Loop:
+                LoopExecutor loopExecutor = new(this);
+                return loopExecutor.Execute(node);
+            case IntermediateCodeNodeType.If:
+                IfExecutor ifExecutor = new(this);
+                return ifExecutor.Execute(node);
+            case IntermediateCodeNodeType.Select:
+                SelectExecutor selectExecutor = new(this);
+                return selectExecutor.Execute(node);
             case IntermediateCodeNodeType.NoOp:
                 return null;
             default:
