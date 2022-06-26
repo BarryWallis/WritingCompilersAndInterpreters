@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Globalization;
-using System.Reflection.PortableExecutable;
 
 using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;

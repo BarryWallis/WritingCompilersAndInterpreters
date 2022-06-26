@@ -10,8 +10,8 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 /// </summary>
 public class ForStatementParser : StatementParser
 {
-    private readonly static ISet<PascalTokenType> _toDowntoTokenTypes;
-    private readonly static ISet<PascalTokenType> _doTokenTypes;
+    private static readonly ISet<PascalTokenType> _toDowntoTokenTypes;
+    private static readonly ISet<PascalTokenType> _doTokenTypes;
 
     static ForStatementParser()
     {

@@ -7,7 +7,7 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 
 public class AssignmentStatementParser : StatementParser
 {
-    private readonly static ISet<PascalTokenType> _colonEqualsTokenTypes;
+    private static readonly ISet<PascalTokenType> _colonEqualsTokenTypes;
 
     static AssignmentStatementParser()
     {

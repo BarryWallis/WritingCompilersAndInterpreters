@@ -8,7 +8,7 @@ namespace WritingCompilersAndInterpretersLib.FrontEnd.Pascal.Parsers;
 /// </summary>
 public class WhileStatementParser : StatementParser
 {
-    private readonly static ISet<PascalTokenType> _doTokenTypes;
+    private static readonly ISet<PascalTokenType> _doTokenTypes;
 
     static WhileStatementParser()
     {
@@ -28,9 +28,9 @@ public class WhileStatementParser : StatementParser
     public override IIntermediateCodeNode Parse(Token token)
     {
         token = GetNextToken();
-        IIntermediateCodeNode loopNode 
+        IIntermediateCodeNode loopNode
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Loop);
-        IIntermediateCodeNode breakNode 
+        IIntermediateCodeNode breakNode
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Test);
         IIntermediateCodeNode notNode
             = IntermediateCodeFactory.CreateIntermediateCodeNode(IntermediateCodeNodeType.Not);
