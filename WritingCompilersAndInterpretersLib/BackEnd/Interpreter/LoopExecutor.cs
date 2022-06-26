@@ -1,56 +1,55 @@
 ﻿using WritingCompilersAndInterpretersLib.Intermediate;
 using WritingCompilersAndInterpretersLib.Intermediate.IntermediateCodeImplementation;
 
-namespace WritingCompilersAndInterpretersLib.BackEnd.Interpreter
+namespace WritingCompilersAndInterpretersLib.BackEnd.Interpreter;
+
+/// <summary>
+/// Execute a LOOP statement.
+/// </summary>
+public class LoopExecutor : StatementExecutor
 {
     /// <summary>
-    /// Execute a LOOP statement.
+    /// Create a LOOP statement executor.
     /// </summary>
-    public class LoopExecutor : StatementExecutor
+    /// <param name="parent">The parent node.</param>
+    public LoopExecutor(Executor parent) : base(parent)
     {
-        /// <summary>
-        /// Create a LOOP statement executor.
-        /// </summary>
-        /// <param name="parent">The parent node.</param>
-        public LoopExecutor(Executor parent) : base(parent)
-        {
-        }
+    }
 
-        /// <inheritdoc/>
-        public override object? Execute(IIntermediateCodeNode node)
+    /// <inheritdoc/>
+    public override object? Execute(IIntermediateCodeNode node)
+    {
+        bool exitLoop = false;
+        IIntermediateCodeNode? expressionNode = null;
+        IReadOnlyCollection<IIntermediateCodeNode> loopChildren = node.Children;
+        ExpressionExecutor expressionExecutor = new(this);
+        StatementExecutor statementExecutor = new(this);
+        while (!exitLoop)
         {
-            bool exitLoop = false;
-            IIntermediateCodeNode? expressionNode = null;
-            IReadOnlyCollection<IIntermediateCodeNode> loopChildren = node.Children;
-            ExpressionExecutor expressionExecutor = new(this);
-            StatementExecutor statementExecutor = new(this);
-            while (!exitLoop)
+            ExecutionCount += 1;
+            foreach (IIntermediateCodeNode child in loopChildren)
             {
-                ExecutionCount += 1;
-                foreach (IIntermediateCodeNode child in loopChildren)
+                IntermediateCodeNodeType childType = child.NodeType;
+                if (childType == IntermediateCodeNodeType.Test)
                 {
-                    IntermediateCodeNodeType childType = child.NodeType;
-                    if (childType == IntermediateCodeNodeType.Test)
+                    if (expressionNode is null)
                     {
-                        if (expressionNode is null)
-                        {
-                            expressionNode = child.Children.First();
-                        }
-                        exitLoop = (bool)expressionExecutor.Execute(expressionNode);
+                        expressionNode = child.Children.First();
                     }
-                    else
-                    {
-                        _ = statementExecutor.Execute(child);
-                    }
+                    exitLoop = (bool)expressionExecutor.Execute(expressionNode);
+                }
+                else
+                {
+                    _ = statementExecutor.Execute(child);
+                }
 
-                    if (exitLoop)
-                    {
-                        break;
-                    }
+                if (exitLoop)
+                {
+                    break;
                 }
             }
-
-            return null;
         }
+
+        return null;
     }
 }
