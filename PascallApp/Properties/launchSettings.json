@@ -2,7 +2,7 @@
   "profiles": {
     "PascalApp": {
       "commandName": "Project",
-      "commandLineArgs": "execute \"C:\\Users\\Barry\\OneDrive\\Documents\\WCI Source Files\\Chapter8\\iferrors.txt\""
+      "commandLineArgs": "execute \"C:\\Users\\Barry\\OneDrive\\Documents\\WCI Source Files\\Chapter8\\case.txt\""
     }
   }
 }

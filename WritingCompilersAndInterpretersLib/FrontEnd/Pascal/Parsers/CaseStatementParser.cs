@@ -272,7 +272,9 @@ public class CaseStatementParser : StatementParser
     /// <param name="token">The current token.</param>
     /// <param name="sign">The sign, if any.</param>
     /// <returns>The constant node.</returns>
+#pragma warning disable IDE0060 // Remove unused parameter
     private IIntermediateCodeNode? ParseIdentifierConstant(Token token, TokenType? sign)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         errorHandler.Flag(token, PascalErrorCode.InvalidConstant, this);
         return null;
